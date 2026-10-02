@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Dimpo · Malumekazi · A Woman of Strength</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #06050e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', 'Arial', system-ui, sans-serif;
+      overflow: hidden;
+      touch-action: none;
+    }
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 40% 30%, #0f1a14, #06050e);
+      cursor: default;
+      position: relative;
+      z-index: 1;
+      background: transparent;
+    }
+    .hint {
+      position: fixed;
+      bottom: 18px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: rgba(200, 164, 80, 0.10);
+      font-family: 'Georgia', serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      pointer-events: none;
+      background: transparent;
+      text-shadow: 0 0 10px rgba(200, 164, 80, 0.03);
+      font-weight: 300;
+      z-index: 2;
+    }
+    @media (max-width: 600px) {
+      .hint { font-size: 9px; letter-spacing: 2px; bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+  <canvas id="birthdayCanvas"></canvas>
+  <div class="hint">✦ for Dimpo · Malumekazi · nothing is impossible with God 🙏 ✦</div>
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <script>
+    // ================================================================
+    //  DIMPO · MALUMEKAZI · A TRIBUTE OF STRENGTH & FAITH
+    //  green + gold particle system · zooming story layers
+    //  speed 0.7 · 55 particles · exact spec
+    //  MINDTECH STANDARD: no errors, no mistakes, no excuses.
+    // ================================================================
+
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 55, density: { enable: true, value_area: 1000 } },
+        color: { value: ["#1B4D3D", "#C8A450", "#2A7A5E", "#E8D5A3"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.25, random: true },
+        size: { value: 2.5, random: true },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#C8A450",
+          opacity: 0.06,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 0.7,
+          direction: "none",
+          random: true
+        }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" }
+        }
+      }
+    });
+
+    const canvas = document.getElementById('birthdayCanvas');
+    const ctx = canvas.getContext('2d');
+    let W, H;
+
+    function resizeCanvas() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const PARTICLE_COUNT = 90;
+    let particles = [];
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial = false) {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.size = 1.5 + Math.random() * 4;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = -0.2 - Math.random() * 0.5;
+        this.opacity = 0.3 + Math.random() * 0.4;
+        this.color = `hsla(${40 + Math.random() * 30}, 65%, 65%, ${this.opacity})`;
+        this.phase = Math.random() * 100;
+      }
+      update() {
+        this.x += this.speedX + Math.sin(this.phase) * 0.1;
+        this.y += this.speedY + Math.cos(this.phase * 0.8) * 0.1;
+        this.phase += 0.025;
+        if (this.y < -20) { this.y = H + 20; this.x = Math.random() * W; }
+        if (this.y > H + 20) { this.y = -20; this.x = Math.random() * W; }
+        if (this.x < -20) { this.x = W + 20; }
+        if (this.x > W + 20) { this.x = -20; }
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size * 0.7, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = 'rgba(200, 164, 80, 0.25)';
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(this.x - 1, this.y - 1, this.size * 0.25, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 245, 220, 0.4)';
+        ctx.shadowBlur = 15;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(new Particle());
+    }
+
+    function drawText(text, size, color, scale, xOffset, yOffset, rotation = 0, shadow = true) {
+      ctx.save();
+      ctx.translate(W/2 + xOffset * (1/scale) * 0.6, H/2 + yOffset * (1/scale) * 0.6);
+      ctx.scale(scale, scale);
+      ctx.rotate(rotation);
+      ctx.font = `${size}px 'Georgia', 'Segoe UI', serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      if (shadow) {
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 25;
+      }
+      ctx.fillStyle = color;
+      ctx.fillText(text, 0, 0);
+      ctx.restore();
+    }
+
+    function drawHeart(xOff, yOff, scale, color = '#C8A450') {
+      ctx.save();
+      ctx.translate(W/2 + xOff, H/2 + yOff);
+      ctx.scale(scale, scale);
+      ctx.fillStyle = color;
+      ctx.shadowColor = 'rgba(200, 164, 80, 0.3)';
+      ctx.shadowBlur = 25;
+      ctx.beginPath();
+      ctx.moveTo(0, -10);
+      ctx.bezierCurveTo(-20, -25, -35, 0, 0, 20);
+      ctx.bezierCurveTo(35, 0, 20, -25, 0, -10);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawStar(xOff, yOff, scale, color = '#E8D5A3') {
+      ctx.save();
+      ctx.translate(W/2 + xOff, H/2 + yOff);
+      ctx.scale(scale, scale);
+      ctx.fillStyle = color;
+      ctx.shadowColor = 'rgba(200, 164, 80, 0.25)';
+      ctx.shadowBlur = 20;
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * 4 * Math.PI / 5) - Math.PI / 2;
+        if (i === 0) ctx.moveTo(Math.cos(angle) * 12, Math.sin(angle) * 12);
+        else ctx.lineTo(Math.cos(angle) * 12, Math.sin(angle) * 12);
+        const angle2 = angle + 2 * Math.PI / 5;
+        ctx.lineTo(Math.cos(angle2) * 5, Math.sin(angle2) * 5);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // ---------- STORY LAYERS ----------
+    const layers = [];
+
+    // LAYER 0: Opening
+    layers.push({
+      name: 'Greeting',
+      minScale: 0.12,
+      maxScale: 0.9,
+      draw: (scale) => {
+        for (let i = 0; i < 30; i++) {
+          const angle = i * 1.7;
+          const radius = 100 + (i * 30) * (1/scale) * 0.4;
+          const x = W/2 + Math.cos(angle + Date.now()/3000) * radius * 0.5;
+          const y = H/2 + Math.sin(angle + Date.now()/4000) * radius * 0.4;
+          ctx.beginPath();
+          ctx.arc(x, y, 1 + (i % 3), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(232, 213, 163, ${0.06 + (i/100)})`;
+          ctx.shadowBlur = 6;
+          ctx.fill();
+        }
+        drawText('✦ Dimpo · Malumekazi ✦', 44, '#F5EFE0', scale, 0, -160, 0);
+        drawText('a woman of strength · a heart of prayer', 26, '#C8A450', scale * 0.7, 0, -80, 0.02);
+        drawText('honoured by your family', 24, '#A8B5A0', scale * 0.6, 0, -10, -0.01);
+        drawText('“Nothing is impossible with God”', 28, '#E8D5A3', scale * 0.55, 0, 70, 0.01);
+        drawText('Luke 1:37 · her own words, her own faith', 18, '#8A9A82', scale * 0.4, 0, 130, -0.01);
+        drawHeart(0, 200, scale * 0.25, '#C8A450');
+        drawStar(-140, 180, scale * 0.12, '#E8D5A3');
+        drawStar(140, 190, scale * 0.1, '#C8A450');
+      }
+    });
+
+    // LAYER 1: The Mother & The Rock
+    layers.push({
+      name: 'Mother & Rock',
+      minScale: 1.0,
+      maxScale: 3.2,
+      draw: (scale) => {
+        drawText('🌿  a mother · a pillar · a rock  🌿', 32, '#E8D5A3', scale * 0.7, 0, -180, 0);
+        drawText('you raised Thato with love', 24, '#F5EFE0', scale * 0.55, 0, -100, 0.02);
+        drawText('you stood beside uncle Jabulani', 24, '#F5EFE0', scale * 0.5, 0, -40, -0.01);
+        drawText('and when he passed, you became the strength', 22, '#C8A450', scale * 0.45, 0, 30, 0.01);
+        drawText('“Fear not, for I am with you”', 26, '#E8D5A3', scale * 0.5, 0, 110, -0.01);
+        drawText('Isaiah 41:10', 20, '#8A9A82', scale * 0.35, 0, 170, 0.02);
+        for (let i = 0; i < 5; i++) {
+          const t = Date.now() / 2500 + i * 1.3;
+          const x = Math.sin(t) * 100 * (1/scale) * 0.7;
+          const y = Math.cos(t * 0.7) * 60 * (1/scale) * 0.7 + 220;
+          drawHeart(x, y, scale * 0.06, `hsl(${40 + i * 10}, 55%, 60%)`);
+        }
+      }
+    });
+
+    // LAYER 2: Kganya · The Brave Beginning (2023)
+    layers.push({
+      name: 'Kganya · 2023',
+      minScale: 3.6,
+      maxScale: 8.0,
+      draw: (scale) => {
+        drawText('🌸  Kganya · the brave beginning  🌸', 28, '#E8D5A3', scale * 0.5, 0, -200, 0.02);
+        drawText('born premature · tiny · fragile · 2023', 24, '#F5EFE0', scale * 0.42, 0, -120, -0.01);
+        drawText('you took her on without hesitation', 22, '#F5EFE0', scale * 0.38, 0, -50, 0.01);
+        drawText('gogo · mother · nurse · all at once', 20, '#C8A450', scale * 0.3, 0, 20, -0.01);
+        drawText('“For you formed my inward parts”', 24, '#E8D5A3', scale * 0.35, 0, 100, 0.01);
+        drawText('Psalm 139:13-14', 18, '#8A9A82', scale * 0.25, 0, 160, -0.01);
+        drawText('“For this child I prayed” · 1 Samuel 1:27', 18, '#8A9A82', scale * 0.22, 0, 220, 0.02);
+        for (let i = 0; i < 8; i++) {
+          const angle = Date.now() / 3500 + i * 1.2;
+          const rad = 70 * (1/scale) * 1.8;
+          const x = Math.cos(angle) * rad;
+          const y = Math.sin(angle * 0.8) * rad * 0.6 + 290;
+          ctx.beginPath();
+          ctx.arc(W/2 + x, H/2 + y, 2 + i * 1.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 164, 80, ${0.08/scale + 0.03})`;
+          ctx.shadowBlur = 8;
+          ctx.fill();
+        }
+      }
+    });
+
+    // LAYER 3: 2024 · The Hard Year
+    layers.push({
+      name: '2024 · Courage',
+      minScale: 8.5,
+      maxScale: 18.0,
+      draw: (scale) => {
+        drawText('🌿  2024  🌿', 34, '#E8D5A3', scale * 0.28, 0, -200, 0.04);
+        drawText('grief · distance', 24, '#F5EFE0', scale * 0.2, 0, -120, -0.02);
+        drawText('a new life in the North West', 24, '#F5EFE0', scale * 0.2, 0, -50, 0.02);
+        drawText('you held it together', 24, '#C8A450', scale * 0.18, 0, 30, -0.01);
+        drawText('brave when it was hardest', 24, '#C8A450', scale * 0.18, 0, 100, 0.01);
+        drawText('“Be strong and courageous”', 24, '#E8D5A3', scale * 0.18, 0, 190, -0.01);
+        drawText('Joshua 1:9', 16, '#8A9A82', scale * 0.12, 0, 250, 0.02);
+        drawText('“My grace is sufficient for you”', 16, '#8A9A82', scale * 0.11, 0, 310, -0.02);
+        drawText('2 Corinthians 12:9', 16, '#8A9A82', scale * 0.11, 0, 360, 0.02);
+        drawHeart(0, 430, scale * 0.06, '#C8A450');
+        drawStar(-80, 410, scale * 0.03, '#E8D5A3');
+        drawStar(80, 420, scale * 0.03, '#C8A450');
+      }
+    });
+
+    // LAYER 4: Always Kept In Touch
+    layers.push({
+      name: 'Distance Keeper',
+      minScale: 18.5,
+      maxScale: 32.0,
+      draw: (scale) => {
+        drawText('📞  always kept in touch  📞', 28, '#E8D5A3', scale * 0.15, 0, -200, 0.02);
+        drawText('even across provinces', 22, '#F5EFE0', scale * 0.12, 0, -120, -0.01);
+        drawText('calls · messages · check-ins', 22, '#F5EFE0', scale * 0.12, 0, -50, 0.01);
+        drawText('you never let the family scatter', 22, '#C8A450', scale * 0.1, 0, 30, -0.01);
+        drawText('distance never became silence', 22, '#C8A450', scale * 0.1, 0, 100, 0.01);
+        drawText('“A friend loves at all times”', 24, '#E8D5A3', scale * 0.12, 0, 190, -0.01);
+        drawText('Proverbs 17:17', 16, '#8A9A82', scale * 0.08, 0, 250, 0.02);
+        drawText('“Outdo one another in showing honour”', 16, '#8A9A82', scale * 0.08, 0, 310, -0.02);
+        drawText('Romans 12:10', 16, '#8A9A82', scale * 0.08, 0, 360, 0.02);
+        for (let i = 0; i < 6; i++) {
+          const t = Date.now() / 2800 + i * 1.1;
+          const x = Math.cos(t) * 90 * (1/scale) * 0.5;
+          const y = Math.sin(t * 0.9) * 60 * (1/scale) * 0.5 + 430;
+          drawStar(x, y, scale * 0.025, '#E8D5A3');
+        }
+      }
+    });
+
+    // LAYER 5: Blessing & Close — ends with HAPPY BIRTHDAY FROM KHULU
+    layers.push({
+      name: 'Blessing',
+      minScale: 32.5,
+      maxScale: 55.0,
+      draw: (scale) => {
+        drawText('♡  Dimpo  ♡', 46, '#E8D5A3', scale * 0.1, 0, -240, 0.04);
+        drawText('you are seen', 26, '#F5EFE0', scale * 0.07, 0, -160, -0.02);
+        drawText('you are honoured', 26, '#F5EFE0', scale * 0.07, 0, -100, 0.02);
+        drawText('you are loved', 26, '#F5EFE0', scale * 0.07, 0, -40, -0.01);
+        drawText('“The Lord bless you and keep you”', 24, '#E8D5A3', scale * 0.06, 0, 50, 0.02);
+        drawText('Numbers 6:24-26', 18, '#8A9A82', scale * 0.05, 0, 120, -0.01);
+        drawText('“Nothing is impossible with God” 🙏', 28, '#C8A450', scale * 0.06, 0, 210, 0.01);
+        drawText('Happy Birthday', 32, '#F5EFE0', scale * 0.06, 0, 300, -0.02);
+        drawText('from Khulu', 26, '#C8A450', scale * 0.05, 0, 370, 0.02);
+        drawHeart(0, 460, scale * 0.04, '#C8A450');
+        drawStar(-100, 440, scale * 0.02, '#E8D5A3');
+        drawStar(100, 450, scale * 0.02, '#C8A450');
+      }
+    });
+
+    // ---------- ZOOM ENGINE ----------
+    let currentScale = 0.12;
+    const ZOOM_SPEED = 1.0022;
+    const MAX_SCALE = 55.0;
+    const MIN_SCALE = 0.12;
+
+    canvas.addEventListener('click', () => { currentScale = MIN_SCALE; });
+    canvas.addEventListener('touchstart', () => { currentScale = MIN_SCALE; });
+
+    // ---------- DRAW LOOP ----------
+    function drawInfinite() {
+      currentScale *= ZOOM_SPEED;
+      if (currentScale > MAX_SCALE) { currentScale = MIN_SCALE; }
+
+      ctx.clearRect(0, 0, W, H);
+
+      const grad = ctx.createRadialGradient(W*0.4, H*0.3, 0, W*0.5, H*0.4, Math.max(W, H));
+      grad.addColorStop(0, 'rgba(15, 26, 20, 0.25)');
+      grad.addColorStop(0.7, 'rgba(6, 5, 14, 0.4)');
+      grad.addColorStop(1, 'rgba(6, 5, 14, 0.7)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      for (let p of particles) {
+        p.update();
+        p.draw(ctx);
+      }
+
+      for (const layer of layers) {
+        if (currentScale >= layer.minScale && currentScale <= layer.maxScale) {
+          let opacity = 1;
+          const fadeRange = 0.15;
+          const range = layer.maxScale - layer.minScale;
+          const fadeInStart = layer.minScale + (range * fadeRange);
+          const fadeOutStart = layer.maxScale - (range * fadeRange);
+
+          if (currentScale < fadeInStart) {
+            opacity = (currentScale - layer.minScale) / (fadeInStart - layer.minScale);
+          } else if (currentScale > fadeOutStart) {
+            opacity = 1 - (currentScale - fadeOutStart) / (layer.maxScale - fadeOutStart);
+          }
+          opacity = Math.max(0, Math.min(1, opacity));
+          ctx.globalAlpha = opacity;
+          layer.draw(currentScale);
+          ctx.globalAlpha = 1.0;
+        }
+      }
+
+      ctx.fillStyle = 'rgba(200, 164, 80, 0.04)';
+      ctx.font = '10px Georgia, serif';
+      ctx.fillText(`✦ ${Math.round(currentScale * 10) / 10}x · blessing`, 20, H - 20);
+
+      requestAnimationFrame(drawInfinite);
+    }
+
+    drawInfinite();
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      for (let p of particles) {
+        p.x = Math.random() * W;
+        p.y = Math.random() * H;
+      }
+    });
+
+    console.log('🌿 Dimpo · Malumekazi · a woman of strength · Happy Birthday from Khulu.');
+    console.log('📖 Luke 1:37 · Isaiah 41:10 · Psalm 139:13-14 · 1 Samuel 1:27 · Joshua 1:9 · 2 Corinthians 12:9 · Proverbs 17:17 · Romans 12:10 · Numbers 6:24-26');
+    console.log('✨ Nothing is impossible with God 🙏');
+    console.log('✅ No errors, no mistakes, no excuses.');
+  </script>
+</body>
+</html>
